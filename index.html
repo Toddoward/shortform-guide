@@ -89,9 +89,7 @@ body[data-track=story] .only-eng, body[data-track=eng] .only-story{display:none 
 .tracks dl{margin:calc(var(--u)*3) 0 0; display:grid; grid-template-columns:5.5em 1fr; gap:10px 12px}
 .tracks dt{color:var(--t3); font-size:var(--f-small); padding-top:2px}
 .tracks dd{margin:0}
-.tracks .pick{margin-top:calc(var(--u)*3); border:1px solid var(--t1); background:none; border-radius:999px; padding:10px 18px; font-weight:600; cursor:pointer}
 .tracks .col.on{background:#fff}
-.tracks .col.on .pick{background:var(--t1); color:#fff}
 .diff{font-weight:600}
 @media (max-width:720px){ .tracks{grid-template-columns:1fr} .tracks .col + .col{border-left:0; border-top:1px solid var(--hair)} .tracks dl{grid-template-columns:4.8em 1fr} }
 
@@ -142,15 +140,12 @@ body[data-track=story] .only-eng, body[data-track=eng] .only-story{display:none 
 .subs li.now::before{border-color:var(--warm); color:#fff; background:var(--warm)}
 .subs li .tip{display:block; margin-top:4px; font-size:var(--f-small); color:var(--t2)}
 .ctl{display:flex; gap:8px; margin:calc(var(--u)*2) 0 0}
-.ctl button{border:1px solid rgba(0,0,0,.14); background:#fff; border-radius:999px; padding:8px 16px; font-size:15px; font-weight:600; cursor:pointer}
-.ctl button.pri{background:var(--t1); color:#fff; border-color:var(--t1)}
 .check{margin-top:calc(var(--u)*4)}
 .check h3{font-size:var(--f-small); color:var(--t3); font-weight:600; letter-spacing:.02em}
 .check ul{margin:8px 0 0; padding-left:1.1em}
 .check li{margin:4px 0}
 .fix{margin-top:calc(var(--u)*3); padding:14px 16px; border-left:3px solid var(--hair); color:var(--t2); font-size:var(--f-small)}
 .fix b{color:var(--t1)}
-.ui-open{margin-top:calc(var(--u)*3); border:0; background:none; padding:0; font-weight:600; color:var(--t1); text-decoration:underline; text-underline-offset:4px; cursor:pointer}
 
 /* 복사 상자 */
 .copybox{margin-top:calc(var(--u)*2); border-radius:14px; background:#1E1F22; color:#E8E8EA; overflow:hidden}
@@ -158,6 +153,11 @@ body[data-track=story] .only-eng, body[data-track=eng] .only-story{display:none 
 .copybox pre{margin:0; padding:14px 16px; font:15px/1.6 ui-monospace,Consolas,monospace; white-space:pre-wrap; word-break:break-all}
 .cp{border:1px solid rgba(255,255,255,.2); background:none; color:#fff; border-radius:999px; padding:5px 12px; font-size:13px; cursor:pointer}
 .cp.done{border-color:#30D158; color:#30D158}
+.paste{display:grid; gap:12px; margin-top:calc(var(--u)*4)}
+.pi{display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px}
+.pi .btn{min-width:200px}
+.pi .to{display:inline-flex; align-items:center; gap:6px; font-size:var(--f-small); color:var(--t2)}
+.pi .to .i{width:16px; height:16px; color:var(--t3)}
 .compose{display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:calc(var(--u)*2)}
 .compose input,.compose select{font:inherit; font-size:17px; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,.16); background:#fff; min-width:0}
 
@@ -273,6 +273,123 @@ body[data-track=story] .only-eng, body[data-track=eng] .only-story{display:none 
 @media (max-width:720px){ .frows li{grid-template-columns:1fr; gap:4px} }
 footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-top:1px solid var(--hair)}
 
+/* ── v2: 사이트 색 · 파란 버튼 · 칩 · 그림 블록 ── */
+:root{ --blue:#1668E3; --gem:#6A4FD0; --ais:#0B7A70; --flow:#C2560C; --app:#BE2F67; --pc:#5B6170 }
+.gem{--c:var(--gem)} .ais{--c:var(--ais)} .flow{--c:var(--flow)} .app{--c:var(--app)} .pc{--c:var(--pc)}
+.i{width:20px; height:20px; flex:none; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+.i.f{fill:currentColor; stroke:none}
+.i.xl{width:34px; height:34px; stroke-width:1.6}
+.btn-name::before,.btn-name::after{content:none}
+.btn-name{display:inline-block; padding:0 8px; margin:1px 1px; border-radius:7px; background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.15), 0 1px 0 1px rgba(0,0,0,.05); font-weight:600; font-size:.9em; line-height:1.6; white-space:nowrap; color:var(--t1)}
+/* 파란 버튼 — 떠 있는 그림자 + 천천히 흐르는 둥근 빛 */
+@property --gx{syntax:'<percentage>'; inherits:false; initial-value:20%}
+.btn{position:relative; isolation:isolate; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:0; border-radius:999px; padding:12px 20px; font-weight:700; font-size:16px; line-height:1.2; cursor:pointer; text-decoration:none; white-space:nowrap; transition:transform .25s var(--ez), box-shadow .25s var(--ez), background-color .25s}
+.btn::before{content:""; position:absolute; inset:0; z-index:-1; animation:sheen 7s ease-in-out infinite alternate}
+@keyframes sheen{from{--gx:8%} to{--gx:92%}}
+.btn-pri{color:#fff; background-color:var(--blue); box-shadow:0 10px 22px -10px rgba(22,104,227,.8), 0 2px 4px rgba(16,24,40,.08), inset 0 1px 0 rgba(255,255,255,.28)}
+.btn-pri::before{background:radial-gradient(55% 130% at var(--gx) 0%, rgba(150,205,255,.7), transparent 70%), radial-gradient(60% 150% at calc(100% - var(--gx)) 115%, rgba(96,84,255,.5), transparent 70%)}
+.btn-sec{color:var(--blue); background-color:#fff; box-shadow:0 0 0 1px rgba(22,104,227,.25), 0 10px 22px -12px rgba(22,104,227,.5), 0 2px 4px rgba(16,24,40,.05)}
+.btn-sec::before{background:radial-gradient(55% 150% at var(--gx) 0%, rgba(22,104,227,.13), transparent 70%)}
+.btn:hover{transform:translateY(-2px)}
+.btn-pri:hover{box-shadow:0 16px 30px -12px rgba(22,104,227,.85), 0 3px 6px rgba(16,24,40,.08), inset 0 1px 0 rgba(255,255,255,.28)}
+.btn-sec:hover{box-shadow:0 0 0 1px rgba(22,104,227,.4), 0 16px 30px -14px rgba(22,104,227,.55), 0 3px 6px rgba(16,24,40,.05)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn:focus-visible{outline:3px solid rgba(22,104,227,.35); outline-offset:3px}
+.btn.sm{padding:7px 14px; font-size:14px; gap:6px}
+.btn.sm .i{width:17px; height:17px}
+.btn.lg{padding:16px 26px; font-size:18px}
+.btn.done{background-color:#13824C}
+.btn-sec.done{color:#13824C; background-color:#fff}
+.ctl{gap:10px; margin-top:calc(var(--u)*3)}
+.ui-open.btn{margin-top:calc(var(--u)*4); text-decoration:none}
+/* 누를 곳 = 파랑 */
+.hit{outline-color:var(--blue)}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(22,104,227,.6)}100%{box-shadow:0 0 0 22px rgba(22,104,227,0)}}
+.cur i{border-color:var(--blue)}
+.subs li.now::before{border-color:var(--blue); background:var(--blue)}
+/* 사이트 배지 · 단계 머리 */
+.site{display:inline-flex; align-items:center; gap:7px; font-weight:700; font-size:15px; color:var(--c)}
+.site::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--c)}
+.sh{display:flex; align-items:flex-end; gap:22px}
+.bignum{font-size:84px; font-weight:800; line-height:.82; letter-spacing:-.04em; color:var(--c); font-variant-numeric:tabular-nums}
+.meta{display:flex; align-items:center; gap:12px}
+.meta .of{font-size:14px; color:var(--t3); font-weight:600}
+.sh h2{margin-top:8px}
+@media (max-width:720px){ .bignum{font-size:56px} .sh{gap:14px} }
+/* 옮길 것 = 출발 칩 → 도착 칩 */
+.xfer{display:grid; gap:10px; margin-top:calc(var(--u)*1)}
+.xk{font-size:13px; font-weight:700; letter-spacing:.04em; color:var(--t3)}
+.xr{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.xr > .i{color:var(--t3)}
+.xc{display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border-radius:12px; background:#fff; box-shadow:0 0 0 1px var(--hair), 0 2px 8px -2px rgba(16,24,40,.08); font-weight:700; font-size:16px}
+.xc small{font-weight:600; font-size:13px; color:var(--c)}
+.xc .dot,.dot{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--c); flex:none}
+.xfer.none .xr{color:var(--t2); font-size:16px}
+/* 확인 = 체크 */
+.check ul{list-style:none; padding:0}
+.check li{position:relative; padding-left:32px; margin:8px 0}
+.check li::before{content:""; position:absolute; left:0; top:.2em; width:22px; height:22px; border-radius:50%; background:rgba(22,104,227,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231668E3' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center/14px no-repeat}
+/* 첫 화면 사이트 줄 */
+.sites{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:calc(var(--u)*4)}
+.sites > .i{color:var(--t4)}
+.chip{display:inline-flex; align-items:center; gap:7px; padding:7px 13px; border-radius:999px; background:#fff; box-shadow:0 0 0 1px var(--hair), 0 2px 6px -2px rgba(16,24,40,.08); font-weight:700; font-size:15px}
+/* 왜 노트북 */
+.why .ic{color:var(--blue)}
+.why h3{font-size:22px; margin-top:calc(var(--u)*2)}
+.why p{font-size:var(--f-small)}
+/* 두 갈래 — 그림 */
+.tv{display:flex; align-items:center; gap:12px; height:176px; margin-bottom:calc(var(--u)*3)}
+.tv figure{margin:0; text-align:center}
+.tv img{display:block; width:84px; height:150px; object-fit:cover; border-radius:12px; box-shadow:0 8px 18px -8px rgba(0,0,0,.35)}
+.tv figcaption{margin-top:6px; font-size:13px; font-weight:600; color:var(--t2)}
+.tv > .i{color:var(--t3)}
+.facts{list-style:none; margin:calc(var(--u)*3) 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.facts li{padding:10px 12px; border-radius:12px; background:rgba(0,0,0,.03)}
+.facts b{display:block; font-size:12px; letter-spacing:.04em; color:var(--t3)}
+.facts span{display:block; font-weight:700; font-size:16px; line-height:1.4; margin-top:2px}
+.tracks .col.on .facts li{background:rgba(22,104,227,.06)}
+.tracks .pick{margin-top:calc(var(--u)*3)}
+.tracks .col.on .pick{color:#fff; background-color:var(--blue); box-shadow:0 10px 22px -10px rgba(22,104,227,.8), 0 2px 4px rgba(16,24,40,.08)}
+/* 지도 색 */
+.map li .dot{border-color:var(--c); color:var(--c)}
+.map li .tl{color:var(--c); font-weight:600}
+/* 8단계 · 다음 숏폼 · 자료실 */
+.gives{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+.ok3{list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px}
+.ok3 li{display:grid; grid-template-columns:34px 1fr; gap:12px; align-items:center; padding:12px 14px; border-radius:14px; background:#fff; box-shadow:0 0 0 1px var(--hair)}
+.ok3 .n{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font-weight:800; color:var(--blue); background:rgba(22,104,227,.1)}
+.ok3 b{display:block}
+.ok3 span{font-size:var(--f-small); color:var(--t2)}
+.lanes{display:grid; gap:18px; margin-top:calc(var(--u)*5)}
+.lane{display:grid; grid-template-columns:110px 1fr; gap:16px; align-items:center}
+.chain{list-style:none; margin:0; padding:0; display:flex; align-items:stretch; gap:10px; flex-wrap:wrap}
+.chain li{display:flex; align-items:center; gap:10px}
+.chain .st{display:flex; flex-direction:column; justify-content:center; min-height:62px; padding:10px 16px; border-radius:14px; background:#fff; box-shadow:0 0 0 1px var(--hair), 0 4px 12px -6px rgba(16,24,40,.12); font-weight:700; font-size:17px}
+.chain .st .btn-name{align-self:flex-start}
+.chain .st small{font-weight:500; font-size:13px; color:var(--t2)}
+.chain li + li::before{content:""; width:18px; height:2px; background:var(--t4); flex:none}
+.keep{display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:calc(var(--u)*4); color:var(--t2); font-size:var(--f-small)}
+.keep span{display:inline-flex; align-items:center; gap:8px}
+.keep .i{color:var(--blue)}
+@media (max-width:720px){ .lane{grid-template-columns:1fr; gap:8px} .chain{flex-direction:column} .chain li + li::before{width:2px; height:12px; margin-left:22px} .chain li{flex-direction:column; align-items:flex-start; gap:6px} .chain .st{width:100%} }
+.folders{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:calc(var(--u)*5)}
+.fold{padding:18px 18px 10px; border-radius:18px; background:rgba(255,255,255,.8); box-shadow:0 0 0 1px var(--hair), 0 10px 24px -16px rgba(16,24,40,.2)}
+.fold header{display:flex; align-items:center; gap:10px}
+.fold header .i{color:var(--blue)}
+.fold h3{font-size:18px}
+.fold header .hint{margin-left:auto; font-size:13px; font-weight:600; color:var(--t3); white-space:nowrap}
+.fl{list-style:none; margin:10px 0 0; padding:0}
+.fl li{display:grid; grid-template-columns:46px minmax(0,1fr) auto; gap:10px; align-items:center; padding:9px 0; border-top:1px solid var(--hair)}
+.ft{font-size:11px; font-weight:800; letter-spacing:.04em; text-align:center; padding:3px 0; border-radius:6px; color:#fff; background:#8A8F98}
+.ft.pdf{background:#D14343} .ft.txt{background:#5B6170} .ft.md{background:#3F63C7} .ft.mp4{background:#7A4CC2} .ft.m4a{background:#B5651D} .ft.ppt{background:#D9822B}
+.fl b{font-weight:700; font-size:16px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.fl .use{font-size:13px; font-weight:600; color:var(--blue); background:rgba(22,104,227,.08); padding:3px 9px; border-radius:999px; white-space:nowrap}
+.fold.old{opacity:.6}
+.fold.old .use{color:var(--t2); background:rgba(0,0,0,.05)}
+@media (max-width:860px){ .folders{grid-template-columns:1fr} }
+@media (max-width:420px){ .fl li{grid-template-columns:40px minmax(0,1fr)} .fl .use{grid-column:2; justify-self:start} }
+@media (prefers-reduced-motion:reduce){ .btn::before{animation:none} .btn{transition:none} }
+
 /* 도착 모션 */
 .js .rv{opacity:0; transform:translateY(16px); transition:opacity .5s var(--ez), transform .7s var(--ez)}
 .js .built .rv, .js .rv.built{opacity:1; transform:none}
@@ -308,8 +425,9 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
   <div>
     <div class="label rv">AI마스터스쿨 · 숏폼 만들기</div>
     <h1 class="rv" data-d="60">Gemini 노트북 채팅 하나로,<br>30초~1분 숏폼 한 편</h1>
-    <p class="lead rv" data-d="200">노트북이 단계마다 다음 할 일을 알려 줍니다. 이 페이지는 <b>어느 사이트에서 무엇을 누르고, 무엇을 어디로 옮기는지</b>만 보여 줍니다.</p>
-    <a class="go rv" data-d="340" href="#why">처음부터 따라 하기 ↓</a>
+    <p class="lead rv" data-d="200">노트북이 다음 할 일을 알려 주고, 이 페이지는 <b>누를 곳과 옮길 것</b>을 보여 줍니다.</p>
+    <div class="sites rv" data-d="280"><span class="chip gem"><i class="dot"></i>노트북</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="chip ais"><i class="dot"></i>AI Studio</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="chip flow"><i class="dot"></i>Flow</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="chip app"><i class="dot"></i>편집 앱</span></div>
+    <a class="btn btn-pri lg rv" data-d="340" href="#why" style="margin-top:32px"><span>처음부터 따라 하기</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     <p class="note small rv" data-d="400">만들기는 <b>컴퓨터(Chrome)</b>에서 합니다. 이 페이지는 휴대폰으로 옆에 띄워 두고 보면 편합니다.</p>
   </div>
   <figure class="phone rv" data-d="200" style="margin:0">
@@ -321,44 +439,43 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 <!-- 왜 노트북 -->
 <section id="why" data-where="왜 노트북"><div class="wrap">
   <div class="label rv">왜 노트북으로 만드나요?</div>
-  <h2 class="rv" data-d="60">안내서를 기억하는 작업방이라, "다음"이라고만 하면 됩니다</h2>
+  <h2 class="rv" data-d="60">노트북은 안내서를 기억하는 작업방입니다</h2>
   <div class="why">
-    <div class="rv" data-d="200"><div class="n">1</div><h3>안내서를 기억합니다</h3><p>노트북에 넣은 안내서와 요청 사항을 채팅마다 기억합니다. 매번 처음부터 설명하지 않아도 됩니다.</p></div>
-    <div class="rv" data-d="340"><div class="n">2</div><h3>앞 단계를 이어 씁니다</h3><p>대본 → 장면표 → 사진 주문이 한 채팅에 남아 있어, "다음"이라고 하면 앞의 결과로 다음 단계를 씁니다. 표나 글을 따로 저장하지 않습니다.</p></div>
-    <div class="rv" data-d="480"><div class="n">3</div><h3>다음 숏폼은 첫 말만</h3><p>같은 노트북에 첫 말을 다시 쓰면 새 채팅이 열리고 1단계부터 시작합니다. 노트북 준비는 한 번이면 됩니다.</p></div>
+    <div class="rv" data-d="200"><span class="ic"><svg class="i xl" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg></span><h3>안내서를 기억</h3><p>채팅마다 처음부터 설명하지 않아도 됩니다</p></div>
+    <div class="rv" data-d="340"><span class="ic"><svg class="i xl" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 15l6-6"/><path d="M10.5 6.5l1.8-1.8a4 4 0 0 1 5.7 5.7l-1.8 1.8M13.5 17.5l-1.8 1.8a4 4 0 0 1-5.7-5.7l1.8-1.8"/></svg></span><h3>앞 단계를 이어 씀</h3><p>"다음"만 말하면 앞의 결과로 다음 단계를 씁니다</p></div>
+    <div class="rv" data-d="480"><span class="ic"><svg class="i xl" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg></span><h3>다음 숏폼은 첫 말만</h3><p>같은 노트북 · 새 채팅 · 1단계부터</p></div>
   </div>
-  <p class="src rv" data-d="560">근거: Gemini 도움말 「Create and use notebooks in Gemini Apps」 — 노트북 채팅은 자료와 요청 사항을 기억하고, Gemini 도구를 쓸 수 있습니다 (2026-11-03 열람).</p>
+  <p class="src rv" data-d="560">근거: Gemini 도움말 「Create and use notebooks in Gemini Apps」 (2026-11-03 열람)</p>
 </div></section>
 
 <!-- 두 갈래 -->
 <section id="tracks" data-where="두 갈래"><div class="wrap">
   <div class="label rv">어느 쪽으로 만들까요?</div>
-  <h2 class="rv" data-d="60">순서는 같고, 주제와 사진이 다릅니다</h2>
-  <p class="lead rv" data-d="140">고르면 이 페이지의 안내가 그 갈래에 맞게 바뀝니다. 위쪽 버튼으로 언제든 바꿀 수 있습니다.</p>
-  <div class="tracks rv" data-d="240">
+  <h2 class="rv" data-d="60">순서는 같고, 사진이 다릅니다</h2>
+  <div class="tracks rv" data-d="200">
     <div class="col" data-col="story">
+      <div class="tv"><figure><img src="assets/tile-13.webp" alt=""><figcaption>장면 사진</figcaption></figure></div>
       <h3>이야기 숏폼</h3>
-      <p class="eg">예: 우리 동네 단골 빵집의 이른 아침 · 퇴근길 창밖의 저녁 한강</p>
-      <dl>
-        <dt>주제</dt><dd>내가 본 장면 · 겪은 하루 · 남기고 싶은 감정</dd>
-        <dt>대본</dt><dd>궁금한 첫 줄 → 기대나 어려움 → 풀림 → 마무리 한 마디</dd>
-        <dt>사진</dt><dd class="diff">장면마다 한 장 (4~6장)</dd>
-        <dt>영상 조각</dt><dd>사진에서 이어지는 <b>8초</b> (선택)</dd>
-        <dt>사실 확인</dt><dd>필요 없음</dd>
-      </dl>
-      <button class="pick" type="button" data-set-track="story">이야기로 만들기</button>
+      <p class="eg">빵집의 이른 아침 · 퇴근길 저녁 한강</p>
+      <ul class="facts">
+        <li><b>주제</b><span>내가 본 장면 · 감정</span></li>
+        <li><b>사진</b><span>장면마다 1장</span></li>
+        <li><b>영상 조각</b><span>8초 · 선택</span></li>
+        <li><b>사실 확인</b><span>필요 없음</span></li>
+      </ul>
+      <button class="btn btn-sec pick" type="button" data-set-track="story"><span>이야기로 만들기</span></button>
     </div>
     <div class="col" data-col="eng">
+      <div class="tv"><figure><img src="assets/tile-24.webp" alt=""><figcaption>빈 사진</figcaption></figure><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><figure><img src="assets/tile-3.webp" alt=""><figcaption>설명 사진</figcaption></figure></div>
       <h3>공학 숏폼</h3>
-      <p class="eg">예: 전동차 바퀴는 왜 원뿔 모양일까? · 달리던 전동차는 어떻게 멈출까?</p>
-      <dl>
-        <dt>주제</dt><dd>"왜 그럴까?" 질문 하나</dd>
-        <dt>대본</dt><dd>질문 → 이대로면 생기는 문제 → 결정적인 설계 → 원리 → 한계</dd>
-        <dt>사진</dt><dd class="diff">장면마다 짝 — 「빈 사진」 + 같은 사진에 화살표 · 이름표를 더한 「설명 사진」</dd>
-        <dt>영상 조각</dt><dd>빈 사진에서 시작해 설명 사진에서 끝나는 <b>4초</b> (선택)</dd>
-        <dt>사실 확인</dt><dd><b>필수</b> — 숫자 · 원리는 출처를 직접 엽니다. 조사(Deep Research)는 선택</dd>
-      </dl>
-      <button class="pick" type="button" data-set-track="eng">공학으로 만들기</button>
+      <p class="eg">전동차 바퀴는 왜 원뿔 모양일까?</p>
+      <ul class="facts">
+        <li><b>주제</b><span>"왜 그럴까?" 질문</span></li>
+        <li><b>사진</b><span>장면마다 짝 2장</span></li>
+        <li><b>영상 조각</b><span>4초 · 선택</span></li>
+        <li><b>사실 확인</b><span>필수 · 출처 열기</span></li>
+      </ul>
+      <button class="btn btn-sec pick" type="button" data-set-track="eng"><span>공학으로 만들기</span></button>
     </div>
   </div>
   <p class="small rv" data-d="320" style="margin-top:16px">처음이면 이야기 숏폼이 빠릅니다 — 사진이 절반입니다.</p>
@@ -369,23 +486,21 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
   <div class="label rv">8단계 한눈에</div>
   <h2 class="rv" data-d="60">사이트는 넷 — 노트북 · AI&nbsp;Studio · Flow · 편집 앱</h2>
   <ol class="map">
-    <li class="rv" data-d="200"><a href="#s1"><span class="dot">1</span><span class="nm">대본</span><span class="tl">노트북 채팅</span></a></li>
-    <li class="rv" data-d="260"><a href="#s2"><span class="dot">2</span><span class="nm">목소리</span><span class="tl">AI Studio</span></a></li>
-    <li class="rv" data-d="320"><a href="#s3"><span class="dot">3</span><span class="nm">장면 설계</span><span class="tl">노트북 채팅</span></a></li>
+    <li class="rv gem" data-d="200"><a href="#s1"><span class="dot">1</span><span class="nm">대본</span><span class="tl">노트북 채팅</span></a></li>
+    <li class="rv ais" data-d="260"><a href="#s2"><span class="dot">2</span><span class="nm">목소리</span><span class="tl">AI Studio</span></a></li>
+    <li class="rv gem" data-d="320"><a href="#s3"><span class="dot">3</span><span class="nm">장면 설계</span><span class="tl">노트북 채팅</span></a></li>
     <li class="rv flow" data-d="380"><a href="#s4"><span class="dot">4</span><span class="nm">장면 사진</span><span class="tl">Flow</span></a></li>
-    <li class="rv flow opt" data-d="440"><a href="#s5"><span class="dot">5</span><span class="nm">영상 조각</span><span class="tl">Flow · 선택</span></a></li>
-    <li class="rv" data-d="500"><a href="#s6"><span class="dot">6</span><span class="nm">배경음악</span><span class="tl">노트북 채팅</span></a></li>
-    <li class="rv" data-d="560"><a href="#s7"><span class="dot">7</span><span class="nm">합치기</span><span class="tl">편집 앱</span></a></li>
-    <li class="rv" data-d="620"><a href="#s8"><span class="dot">8</span><span class="nm">제목 · 확인</span><span class="tl">노트북 채팅</span></a></li>
+    <li class="rv opt flow" data-d="440"><a href="#s5"><span class="dot">5</span><span class="nm">영상 조각</span><span class="tl">Flow · 선택</span></a></li>
+    <li class="rv gem" data-d="500"><a href="#s6"><span class="dot">6</span><span class="nm">배경음악</span><span class="tl">노트북 채팅</span></a></li>
+    <li class="rv app" data-d="560"><a href="#s7"><span class="dot">7</span><span class="nm">합치기</span><span class="tl">편집 앱</span></a></li>
+    <li class="rv gem" data-d="620"><a href="#s8"><span class="dot">8</span><span class="nm">제목 · 확인</span><span class="tl">노트북 채팅</span></a></li>
   </ol>
-  <p class="small rv" data-d="700" style="margin-top:28px">노트북 채팅 단계는 Gemini가 바로 결과를 씁니다. 다른 사이트 단계는 Gemini가 <b>붙여 넣을 글</b>을 줍니다 — 그 글을 옮기는 것이 할 일의 대부분입니다.</p>
+  <div class="keep rv" data-d="700" style="margin-top:28px"><span class="site gem">노트북 채팅 — Gemini가 바로 결과를 씀</span><span>다른 사이트 — 채팅의 글을 복사해 붙여 넣기</span></div>
 </div></section>
 
 <!-- 0 · 노트북 준비 -->
 <section id="s0" data-where="노트북 준비"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv">처음 한 번만 · <b>Gemini 노트북</b></div>
-    <h2 class="rv" data-d="60">노트북을 만들고, 안내서와 요청 사항을 넣습니다</h2>
+  <div class="head"><div class="sh"><span class="bignum gem rv">0</span><div><div class="meta rv"><span class="site gem">노트북</span><span class="of">처음 한 번만</span></div><h2 class="rv" data-d="60">노트북을 만들고, 안내서와 요청 사항을 넣습니다</h2></div></div>
   </div>
   <div class="txt">
     <ol class="subs rv" data-d="200">
@@ -396,20 +511,14 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
       <li data-s="5"><span class="btn-name">노트북 메모리 사용</span> 끄기 → <span class="btn-name">요청 사항</span>에 붙여 넣기 → <span class="btn-name">저장</span><span class="tip">「요청 사항 복사」로 가져갑니다</span></li>
       <li data-s="6">입력창 <span class="btn-name">Gemini에게 물어보기</span>에 첫 말 → 보내기</li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
-    <div class="copybox rv" data-d="300"><div class="bar"><span>노트북에 넣을 글 두 개</span></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px">
-        <button class="cp" type="button" data-copy="guide">안내서 복사</button>
-        <button class="cp" type="button" data-copy="inst">요청 사항 복사</button>
-        <a class="cp" href="notebook/guide.md" download="AI마스터스쿨_숏폼안내서.md" style="text-decoration:none">안내서 파일로 받기</a>
-      </div>
-    </div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
+    <div class="paste rv" data-d="300"><div class="pi"><button class="btn btn-pri" type="button" data-copy="guide"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>안내서 복사</span></button><span class="to"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg> 3의 「텍스트 복사됨」에</span></div><div class="pi"><button class="btn btn-pri" type="button" data-copy="inst"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>요청 사항 복사</span></button><span class="to"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg> 5의 「요청 사항」에</span></div><div class="pi"><a class="btn btn-sec" href="notebook/guide.md" download="AI마스터스쿨_숏폼안내서.md"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>안내서 파일로 받기</span></a><span class="to">「파일 업로드」로 넣을 때</span></div></div>
     <div class="check rv" data-d="340"><h3>첫 말 만들기</h3>
       <div class="compose"><input id="topic" type="text" placeholder="내 주제를 쓰세요 (예: 퇴근길 창밖의 저녁 한강)" aria-label="내 주제"><select id="len" aria-label="길이"><option>30초</option><option selected>45초</option><option>1분</option></select></div>
-      <div class="copybox"><div class="bar"><span>노트북 입력창에 붙여 넣기</span><button class="cp" type="button" data-copy="first">복사</button></div><pre id="firstMsg"></pre></div>
+      <div class="copybox"><div class="bar"><span>노트북 입력창에 붙여 넣기</span><button class="btn btn-pri sm" type="button" data-copy="first"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>복사</span></button></div><pre id="firstMsg"></pre></div>
     </div>
     <div class="fix rv" data-d="380"><b>메모리를 끄는 이유</b> — 켜 두면 다음 숏폼을 만들 때 앞 숏폼의 장면이 섞일 수 있습니다. 채팅마다 숏폼 한 편씩 깨끗하게 시작합니다.</div>
-    <button class="ui-open rv" data-d="420" type="button" data-drawer="d-gem">노트북 화면이 처음이라면 — 화면 둘러보기</button>
+    <button class="btn btn-sec ui-open rv" data-d="420" type="button" data-drawer="d-gem"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>화면 둘러보기</span></button>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
     <div class="urlbar"><span>gemini.google.com</span></div>
@@ -431,19 +540,17 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 1 · 대본 -->
 <section id="s1" data-where="1/8 대본"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>1/8</b> · 노트북 채팅</div>
-    <h2 class="rv" data-d="60">첫 말을 보내면 지도와 대본이 바로 나옵니다</h2>
+  <div class="head"><div class="sh"><span class="bignum gem rv">1</span><div><div class="meta rv"><span class="site gem">노트북 채팅</span><span class="of">1 / 8</span></div><h2 class="rv" data-d="60">첫 말을 보내면 지도와 대본이 바로 나옵니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move none rv" data-d="140"><span class="k">옮길 것</span><span>없음 — 대본은 채팅에 남아 다음 단계가 이어 씁니다</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer none rv" data-d="140"><span class="xk">옮길 것</span><div class="xr">없음 — 대본은 채팅에 남아 다음 단계가 이어 씁니다</div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1">첫 답 맨 위의 <b>8단계 지도</b> 표 확인</li>
       <li data-s="2">첫 줄이 <b>[1/8 · 대본]</b>인지 보고 대본 읽기<span class="tip only-story">장면마다 길이 · 감정 · 내레이션 한두 문장</span><span class="tip only-eng">네 문장(질문 · 원리 · 보일 흐름 · 특징) + 장면별 대본 + 출처</span></li>
       <li data-s="3">고칠 곳만 말하기<span class="tip">예: <code>S02 문장을 더 짧게</code> · <code>마지막 한 마디를 바꿔 줘</code></span></li>
       <li data-s="4">마음에 들면 <code>다음</code></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
     <div class="check rv" data-d="300"><h3>확인할 것</h3><ul>
       <li>처음 3초가 궁금한가</li><li>문장마다 새 내용이 나오나</li>
       <li class="only-story">마지막 한 마디가 남나</li>
@@ -468,13 +575,11 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 2 · 목소리 -->
 <section id="s2" data-where="2/8 목소리"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>2/8</b> · AI Studio</div>
-    <h2 class="rv" data-d="60">대본을 AI Studio에 붙여 넣어 목소리를 만듭니다</h2>
+  <div class="head"><div class="sh"><span class="bignum ais rv">2</span><div><div class="meta rv"><span class="site ais">AI Studio</span><span class="of">2 / 8</span></div><h2 class="rv" data-d="60">대본을 AI Studio에 붙여 넣어 목소리를 만듭니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move rv" data-d="140"><span class="k">옮길 것</span><span class="a">채팅의 「읽을 대본」</span><span class="arr">→</span><span>AI Studio 글 상자</span><span class="a">「말투」</span><span class="arr">→</span><span>Style 칸</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer rv" data-d="140"><span class="xk">옮길 것</span><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>읽을 대본</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc ais"><i class="dot"></i><small>AI Studio</small>글 상자</span></div><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>말투</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc ais"><i class="dot"></i><small>AI Studio</small>Style 칸</span></div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1">채팅의 코드 블록 오른쪽 위 복사 버튼 누르기<span class="tip">코드 블록이 둘 — 읽을 대본 · 말투</span></li>
       <li data-s="2">aistudio.google.com/generate-speech → <span class="btn-name">Create new dialog</span><span class="tip">화면은 영어입니다</span></li>
       <li data-s="3">가운데 글 상자에 <b>읽을 대본</b> 붙여 넣기</li>
@@ -483,9 +588,9 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
       <li data-s="6">오른쪽 아래 <span class="btn-name">Run</span> → ▶ 듣기 → ⬇ 내려받기</li>
       <li data-s="7">채팅으로 돌아와 <code>목소리 길이는 48초야. 다음</code><span class="tip">실제 길이로 장면을 나눕니다</span></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
     <div class="check rv" data-d="300"><h3>확인할 것</h3><ul><li>발음이 틀린 단어가 없나 — 있으면 채팅에 "○○를 소리 나는 대로 고쳐 줘"</li><li>장면이 바뀌는 곳에서 쉬나</li><li>말한 길이 안인가</li></ul></div>
-    <button class="ui-open rv" data-d="340" type="button" data-drawer="d-ais">AI Studio 화면이 낯설면 — 화면 둘러보기</button>
+    <button class="btn btn-sec ui-open rv" data-d="340" type="button" data-drawer="d-ais"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>화면 둘러보기</span></button>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
     <div class="urlbar"><span class="sw on" data-on="1" style="opacity:1;visibility:visible">gemini.google.com</span></div>
@@ -513,18 +618,16 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 3 · 장면 설계 -->
 <section id="s3" data-where="3/8 장면 설계"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>3/8</b> · 노트북 채팅</div>
-    <h2 class="rv" data-d="60">실제 목소리 길이로 장면을 나눕니다</h2>
+  <div class="head"><div class="sh"><span class="bignum gem rv">3</span><div><div class="meta rv"><span class="site gem">노트북 채팅</span><span class="of">3 / 8</span></div><h2 class="rv" data-d="60">실제 목소리 길이로 장면을 나눕니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move none rv" data-d="140"><span class="k">옮길 것</span><span>없음 — 장면표는 채팅에 남습니다</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer none rv" data-d="140"><span class="xk">옮길 것</span><div class="xr">없음 — 장면표는 채팅에 남습니다</div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1"><b>룩 바이블</b> 읽기 — 모든 사진에 똑같이 붙는 문단<span class="tip only-story">빛 · 색 · 주인공 옷차림을 하나로 고정해 사진끼리 같은 영상처럼 보이게 합니다</span><span class="tip only-eng">대상의 형상 · 재료 · 빛을 하나로 고정합니다</span></li>
       <li data-s="2"><b>장면표</b> 읽기 — S01부터 장면마다 길이 · 대본 구절 · 화면<span class="tip only-eng">설명 사진에 넣을 이름표 · 화살표 방향도 함께</span></li>
       <li data-s="3">마음에 들면 <code>다음</code> — Flow에 붙여 넣을 사진 주문이 나옵니다</li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
     <div class="check rv" data-d="300"><h3>확인할 것</h3><ul><li>장면이 대본 순서와 맞나</li><li>사진으로 그릴 수 있는 장면인가</li><li>같은 장면이 반복되지 않나</li></ul></div>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
@@ -540,13 +643,11 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 4 · 장면 사진 -->
 <section id="s4" data-where="4/8 장면 사진"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>4/8</b> · Flow</div>
-    <h2 class="rv" data-d="60">Flow 프로젝트 하나에서 장면 사진을 만들고 이름을 붙입니다</h2>
+  <div class="head"><div class="sh"><span class="bignum flow rv">4</span><div><div class="meta rv"><span class="site flow">Flow</span><span class="of">4 / 8</span></div><h2 class="rv" data-d="60">Flow 프로젝트 하나에서 장면 사진을 만들고 이름을 붙입니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move rv" data-d="140"><span class="k">옮길 것</span><span class="a">채팅의 「[S01] 사진 주문」</span><span class="arr">→</span><span>Flow 입력창</span><span class="a only-eng">「[S01 설명]」</span><span class="arr only-eng">→</span><span class="only-eng">빈 사진을 붙인 입력창</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer rv" data-d="140"><span class="xk">옮길 것</span><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>[S01] 사진 주문</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc flow"><i class="dot"></i><small>Flow</small>입력창</span></div><div class="xr only-eng"><span class="xc gem"><i class="dot"></i><small>채팅</small>[S01 설명] 주문</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc flow"><i class="dot"></i><small>Flow</small>빈 사진을 붙인 입력창</span></div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1">flow.google.com → <span class="btn-name">새 프로젝트</span></li>
       <li data-s="2">입력창 아래 <span class="btn-name">에이전트</span>가 하얗게 켜져 있으면 눌러 끄기</li>
       <li data-s="3">오른쪽 아래 설정 칩 → <span class="btn-name">이미지</span> · <span class="btn-name">9:16</span> · <span class="btn-name">x2</span><span class="tip">"생성 시 0 크레딧" — 사진은 크레딧을 쓰지 않습니다</span></li>
@@ -554,14 +655,14 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
       <li data-s="5">두 장 중 마음에 드는 사진의 <span class="btn-name">⋮</span> → <span class="btn-name">이름 바꾸기</span> → <code>S01</code><span class="tip">S02 · S03 … 마지막 장면까지 4~5를 되풀이</span></li>
       <li data-s="6" data-track="eng" class="only-eng">빈 사진 S01의 <span class="btn-name">⋮</span> → <span class="btn-name">프롬프트에 추가</span> → <b>[S01 설명] 주문</b> 붙여 넣기 → 화살표<span class="tip">새 사진의 이름을 <code>S01 설명</code>으로</span></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
-    <div class="fix rv" data-d="280"><b>고칠 때</b> — 사진을 누르면 크게 열립니다. 아래 <span class="btn-name">어떤 내용을 변경하려 하시나요?</span>에 고칠 점(예: <code>유리에 비친 얼굴을 지워 줘</code>) → 화살표 → <span class="btn-name">완료</span>. 고친 사진은 원래 자리에 겹쳐 쌓입니다.<span class="only-eng"> 그래서 설명 사진은 6처럼 따로 만듭니다 — 빈 사진을 눌러 고치면 빈 사진이 사라집니다.</span></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
+    <div class="fix rv" data-d="280"><b>고칠 때</b> 사진 누르기 → <span class="btn-name">어떤 내용을 변경하려 하시나요?</span>에 고칠 점 → 화살표 → <span class="btn-name">완료</span><span class="tip" style="display:block;margin-top:6px">고친 사진은 같은 자리에 겹쳐 쌓입니다.<span class="only-eng"> 그래서 설명 사진은 6처럼 따로 만듭니다.</span></span></div>
     <div class="check rv" data-d="320"><h3>확인할 것</h3><ul>
       <li class="only-story">같은 주인공(옷 · 소품) · 같은 빛 방향인가</li>
       <li>글자 · 로고 · 얼굴(유리에 비친 얼굴 포함)이 없나 · 세로인가</li>
       <li class="only-eng">설명 사진이 빈 사진과 같은 구도인가 · 화살표 방향이 맞나 · 한글 이름표가 깨지지 않았나 · 아래 4분의 1이 비었나</li>
     </ul></div>
-    <button class="ui-open rv" data-d="360" type="button" data-drawer="d-flow">Flow 화면이 낯설면 — 화면 둘러보기</button>
+    <button class="btn btn-sec ui-open rv" data-d="360" type="button" data-drawer="d-flow"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>화면 둘러보기</span></button>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
     <div class="urlbar"><span>flow.google.com</span></div>
@@ -581,14 +682,12 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 5 · 영상 조각 -->
 <section id="s5" data-where="5/8 영상 조각"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>5/8</b> · 같은 Flow 프로젝트 · 선택</div>
-    <h2 class="rv" data-d="60">만든 사진을 「시작」에 넣어 영상 조각을 만들고, 내려받습니다</h2>
+  <div class="head"><div class="sh"><span class="bignum flow rv">5</span><div><div class="meta rv"><span class="site flow">같은 Flow 프로젝트</span><span class="of">5 / 8 · 선택</span></div><h2 class="rv" data-d="60">만든 사진을 「시작」에 넣어 영상 조각을 만들고, 내려받습니다</h2></div></div>
     <p class="lead rv" data-d="100">사진만으로도 영상이 됩니다 — 편집 앱이 사진을 천천히 확대합니다. 크레딧이 남으면 만듭니다.</p>
   </div>
   <div class="txt">
-    <div class="move rv" data-d="140"><span class="k">옮길 것</span><span class="a">채팅의 「[CLIP01] 주문」</span><span class="arr">→</span><span>Flow 입력창</span><span class="a">Flow의 사진 · 영상</span><span class="arr">→</span><span>내 컴퓨터 폴더</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer rv" data-d="140"><span class="xk">옮길 것</span><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>[CLIP01] 주문</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc flow"><i class="dot"></i><small>Flow</small>입력창</span></div><div class="xr"><span class="xc flow"><i class="dot"></i><small>Flow</small>사진 · 영상</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc pc"><i class="dot"></i><small>내 컴퓨터</small>주제 폴더</span></div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1">채팅에 <code>다음</code> → 장면마다 <b>[CLIP] 주문</b>이 나옵니다</li>
       <li data-s="2">설정 칩 → <span class="btn-name">동영상</span> · <span class="btn-name">프레임</span> · <span class="btn-name">9:16</span> · <span class="btn-name">Omni 1.1 Flash</span> · <span class="btn-name">720p</span> · <span class="only-story"><span class="btn-name">8초</span></span><span class="only-eng"><span class="btn-name">4초</span></span> · <span class="btn-name">x1</span><span class="tip only-story">"생성 시 12 크레딧" — 무료는 하루 50, 8초 조각 넷</span><span class="tip only-eng">4초는 7 크레딧 — 무료는 하루 50, 조각 일곱</span></li>
       <li data-s="3">입력창 위 <span class="btn-name">시작</span> → 목록에서 <code>S01</code> → <span class="btn-name">프롬프트에 추가</span><span class="tip only-eng">「종료」에도 <code>S01 설명</code> → 「프롬프트에 추가」</span></li>
@@ -596,9 +695,9 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
       <li data-s="5">다 만들면 영상의 <span class="btn-name">⋮</span> → <span class="btn-name">다운로드</span> → <span class="btn-name">720p 원본 크기</span><span class="tip">영상이 없는 장면은 사진의 「⋮」 → 「다운로드」 → 「1K 원본 크기」</span></li>
       <li data-s="6">파일 이름을 장면 순서로 — <code>01_S01.mp4</code> · <code>02_S02.png</code> …<span class="tip">이름순 = 영상 순서입니다</span></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
     <div class="check rv" data-d="300"><h3>확인할 것</h3><ul><li>첫 장면이 사진과 같은가</li><li>카메라가 한 방향으로 천천히 움직이나 · 모양이 녹거나 바뀌지 않나</li><li>만들기 전에 "생성 시 N 크레딧"을 봤나 — <span class="btn-name">x2</span>면 두 배</li></ul></div>
-    <button class="ui-open rv" data-d="340" type="button" data-drawer="d-flow">Flow 화면이 낯설면 — 화면 둘러보기</button>
+    <button class="btn btn-sec ui-open rv" data-d="340" type="button" data-drawer="d-flow"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>화면 둘러보기</span></button>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
     <div class="urlbar"><span class="sw on" data-on="1">gemini.google.com</span><span class="sw" data-on="2 3 4 5 6">flow.google.com</span></div>
@@ -622,21 +721,19 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 6 · 배경음악 -->
 <section id="s6" data-where="6/8 배경음악"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>6/8</b> · 노트북 채팅</div>
-    <h2 class="rv" data-d="60">같은 채팅에서 「음악 만들기」를 켜고 음악 주문을 붙여 넣습니다</h2>
+  <div class="head"><div class="sh"><span class="bignum gem rv">6</span><div><div class="meta rv"><span class="site gem">노트북 채팅</span><span class="of">6 / 8</span></div><h2 class="rv" data-d="60">같은 채팅에서 「음악 만들기」를 켜고 음악 주문을 붙여 넣습니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move rv" data-d="140"><span class="k">옮길 것</span><span class="a">채팅의 「음악 주문」</span><span class="arr">→</span><span>같은 채팅 입력창(음악 만들기 켠 상태)</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer rv" data-d="140"><span class="xk">옮길 것</span><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>음악 주문</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc gem"><i class="dot"></i><small>같은 채팅</small>「음악 만들기」 켠 입력창</span></div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1"><code>다음</code> → <b>음악 주문</b> 코드 블록을 복사</li>
       <li data-s="2">입력창 <span class="btn-name">+</span> → <span class="btn-name">음악 만들기</span></li>
       <li data-s="3">입력창 아래 <span class="btn-name">길이</span> → <span class="btn-name">짧게</span> · <span class="btn-name">보컬</span> → <span class="btn-name">연주곡</span></li>
       <li data-s="4"><b>음악 주문</b> 붙여 넣기 → 보내기 → 표지 그림이 나오면 ▶ 듣기</li>
       <li data-s="5">표지 그림에 마우스를 올리고 <span class="btn-name">트랙 다운로드</span> → <code>bgm</code><span class="tip">끝나면 「+」 → 「음악 만들기」를 눌러 끄고 <code>다음</code></span></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
-    <div class="fix rv" data-d="280"><b><code>음악</code> 한 단어만 보내면 음악 대신 글만 나옵니다.</b> 꼭 주문 전체를 붙여 넣습니다. 음악이 목소리보다 길어도 됩니다 — 편집 앱이 잘라 쓰고, 말할 때 음악을 줄입니다.</div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
+    <div class="fix rv" data-d="280"><b><code>음악</code> 한 단어만 보내면 글만 나옵니다</b> — 주문 전체를 붙여 넣으세요.</div>
     <div class="check rv" data-d="320"><h3>확인할 것</h3><ul><li>보컬이 없는 연주곡인가</li><li>영상의 감정과 어울리나</li></ul></div>
   </div>
   <div class="vis rv" data-d="120"><div class="screen"><div class="stage">
@@ -652,20 +749,18 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 7 · 합치기 -->
 <section id="s7" data-where="7/8 합치기"><div class="wrap step" data-demo>
-  <div class="head">
-    <div class="label rv"><b>7/8</b> · 편집 앱</div>
-    <h2 class="rv" data-d="60">파일을 전부 끌어다 놓고, 자막을 만들고, 내보냅니다</h2>
+  <div class="head"><div class="sh"><span class="bignum app rv">7</span><div><div class="meta rv"><span class="site app">편집 앱</span><span class="of">7 / 8</span></div><h2 class="rv" data-d="60">파일을 전부 끌어다 놓고, 자막을 만들고, 내보냅니다</h2></div></div>
   </div>
   <div class="txt">
-    <div class="move rv" data-d="140"><span class="k">옮길 것</span><span class="a">내 폴더의 파일 전부</span><span class="arr">→</span><span>「재료」 탭</span><span class="a">채팅의 「자막용 대본」</span><span class="arr">→</span><span>「자막」 탭</span></div>
-    <ol class="subs rv" data-d="200" style="margin-top:16px">
+    <div class="xfer rv" data-d="140"><span class="xk">옮길 것</span><div class="xr"><span class="xc pc"><i class="dot"></i><small>내 컴퓨터</small>파일 전부</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc app"><i class="dot"></i><small>편집 앱</small>「재료」 탭</span></div><div class="xr"><span class="xc gem"><i class="dot"></i><small>채팅</small>자막용 대본</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="xc app"><i class="dot"></i><small>편집 앱</small>「자막」 탭</span></div></div>
+    <ol class="subs rv" data-d="200" style="margin-top:20px">
       <li data-s="1">편집 앱 열기 → 안내 창이 뜨면 <span class="btn-name">Continue to the app</span><span class="tip"><a href="https://ai.studio/apps/4482eb09-853d-4e1f-82bc-99f300f0b599" target="_blank" rel="noopener">편집 앱 열기 ↗</a> · "Rate exceeded."가 뜨면 위쪽 새로고침</span></li>
       <li data-s="2"><span class="btn-name">재료</span> 탭에 영상 · 사진 · 목소리 · 음악을 한꺼번에 끌어다 놓기<span class="tip">파일 이름 번호 순서로 타임라인에 놓입니다</span></li>
       <li data-s="3"><span class="btn-name">자막</span> 탭에 <b>자막용 대본</b> 붙여 넣기 → <span class="btn-name">자막 만들기</span><span class="tip">채팅에 "자막용 대본 줘"라고 하면 표시를 뺀 글을 줍니다</span></li>
       <li data-s="4">▶로 끝까지 보기 — 소리 크기는 <span class="btn-name">소리</span> 탭에서</li>
       <li data-s="5"><span class="btn-name">내보내기</span> → <span class="btn-name">부드럽게 720p(권장)</span> → <span class="btn-name">내보내기 시작</span> → <span class="btn-name">파일 내려받기</span></li>
     </ol>
-    <div class="ctl rv" data-d="240"><button type="button" class="pri" data-next>다음 ›</button><button type="button" data-play>▶ 순서대로 보기</button></div>
+    <div class="ctl rv" data-d="240"><button type="button" class="btn btn-pri" data-next><span>다음 순서</span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="btn btn-sec" data-play><svg class="i f" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><span>순서대로 보기</span></button></div>
     <div class="check rv" data-d="300"><h3>확인할 것</h3><ul><li>말과 화면이 같은 내용인가</li><li>자막이 사진의 중요한 곳을 가리지 않나</li><li>음악이 목소리를 덮지 않나</li></ul></div>
   </div>
   <div class="vis rv" data-d="120"><div class="screen" style="background:#0B1220"><div class="stage">
@@ -683,69 +778,41 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
 
 <!-- 8 · 제목 -->
 <section id="s8" data-where="8/8 제목 · 확인"><div class="wrap">
-  <div class="label rv"><b>8/8</b> · 노트북 채팅</div>
-  <h2 class="rv" data-d="60">제목을 받고, 올리기 전에 세 가지를 봅니다</h2>
+  <div class="sh"><span class="bignum gem rv">8</span><div><div class="meta rv"><span class="site gem">노트북 채팅</span><span class="of">8 / 8</span></div><h2 class="rv" data-d="60">제목을 받고, 올리기 전에 세 가지를 봅니다</h2></div></div>
   <div class="again">
-    <div class="rv" data-d="200"><h3 style="font-size:21px">채팅에 <code>다음</code></h3><p style="margin-top:8px;color:var(--t2)">추천 제목 하나와 다른 제목 셋, 설명 두세 줄, "AI로 만든 장면 · 목소리 · 음악을 포함합니다" 한 줄, 해시태그를 줍니다.<span class="only-eng"> 공학은 "이해를 돕기 위해 일부 현상을 단순화했습니다"도 들어갑니다.</span></p></div>
-    <div class="rv" data-d="300"><h3 style="font-size:21px">올리기 전 세 가지</h3><ol style="margin:8px 0 0;padding-left:1.2em;color:var(--t2)"><li>사실이 맞는가 — 이름 · 숫자 · 장소를 내가 확인했나</li><li>실제 사람 얼굴 · 유명인 · 남의 음악 · 상표 · 회사 내부 자료가 없나</li><li>AI로 만든 영상임을 밝혔나 — 올리는 곳의 규칙을 따릅니다</li></ol></div>
+    <div class="rv" data-d="200"><div class="xk">채팅에 <code>다음</code> → 받는 것</div>
+      <div class="gives"><span class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></svg> 추천 제목 1 + 다른 제목 3</span><span class="chip">설명 2~3줄</span><span class="chip">"AI로 만든 영상" 표시</span><span class="chip"># 해시태그 5개</span><span class="chip only-eng">"일부 단순화" 표시</span></div></div>
+    <div class="rv" data-d="300"><div class="xk">올리기 전 세 가지</div>
+      <ol class="ok3"><li><span class="n">1</span><div><b>사실이 맞나</b><span>이름 · 숫자 · 장소를 내가 확인</span></div></li><li><span class="n">2</span><div><b>남의 것이 없나</b><span>얼굴 · 유명인 · 음악 · 상표 · 회사 자료</span></div></li><li><span class="n">3</span><div><b>AI로 만들었다고 밝혔나</b><span>올리는 곳의 규칙대로</span></div></li></ol></div>
   </div>
 </div></section>
 
 <!-- 다음 숏폼 -->
 <section id="again" data-where="다음 숏폼"><div class="wrap">
   <div class="label rv">다음 숏폼을 만들 때</div>
-  <h2 class="rv" data-d="60">같은 노트북에 첫 말만 다시 쓰면 1단계부터 시작합니다</h2>
-  <div class="again">
-    <div class="rv" data-d="200"><h3 style="font-size:21px">노트북</h3><p style="margin-top:8px;color:var(--t2)">왼쪽 <span class="btn-name">숏폼 만들기</span> 노트북 → 입력창에 새 주제로 첫 말 → 보내기. 노트북 안에 새 채팅이 생깁니다. 자료와 요청 사항은 그대로입니다.</p></div>
-    <div class="rv" data-d="300"><h3 style="font-size:21px">Flow</h3><p style="margin-top:8px;color:var(--t2)">홈에서 <span class="btn-name">새 프로젝트</span>를 하나 더 만듭니다. 숏폼 하나 = 프로젝트 하나라야 「시작」 목록이 섞이지 않습니다.</p></div>
+  <h2 class="rv" data-d="60">노트북엔 첫 말만, Flow엔 새 프로젝트만</h2>
+  <div class="lanes">
+    <div class="lane rv" data-d="160"><span class="site gem">노트북</span>
+      <ol class="chain"><li><span class="st"><span class="btn-name">숏폼 만들기</span><small>왼쪽 노트북</small></span></li><li><span class="st">새 주제로 첫 말<small>입력창에</small></span></li><li><span class="st">새 채팅 · 1단계<small>저절로 시작</small></span></li></ol></div>
+    <div class="lane rv" data-d="260"><span class="site flow">Flow</span>
+      <ol class="chain"><li><span class="st">홈<small>flow.google.com</small></span></li><li><span class="st"><span class="btn-name">새 프로젝트</span><small>숏폼 하나 = 프로젝트 하나</small></span></li><li><span class="st">S01부터<small>「시작」 목록이 안 섞임</small></span></li></ol></div>
   </div>
-  <p class="small rv" data-d="360" style="margin-top:24px">한도를 넘기면 다음 날 같은 채팅과 같은 Flow 프로젝트를 열어 이어서 합니다. 채팅은 노트북 안에, 사진은 프로젝트 안에 남아 있습니다.</p>
+  <div class="keep rv" data-d="340"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> 안내서 · 요청 사항은 그대로</span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg> 한도를 넘으면 다음 날 같은 채팅 · 같은 프로젝트에서 이어서</span></div>
 </div></section>
 
 <!-- 자료실 -->
 <section id="files" data-where="자료실 파일"><div class="wrap">
   <div class="label rv">자료실 파일, 언제 쓰나요?</div>
-  <h2 class="rv" data-d="60">회차별 입력 문장 말고, 다시 꺼내 쓸 파일들</h2>
-  <p class="lead rv" data-d="120">자료실은 단체방 공지의 링크로 엽니다. 이 페이지에는 파일 링크를 걸지 않았습니다.</p>
-  <div class="files">
-    <h3 class="rv">숏폼을 다시 만들 때</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">AI마스터스쿨_숏폼안내서.md<small>새 안내서 · 2026-11-03</small></span><span class="fu">노트북 자료로 넣는 안내서. 이 페이지의 「안내서 복사」와 같은 글입니다.</span></li>
-      <li><span class="fn">노트북_요청사항.txt<small>새 안내서와 짝</small></span><span class="fu">노트북 설정의 「요청 사항」에 붙여 넣는 글.</span></li>
-      <li><span class="fn">8회차_전동차바퀴_완성본.mp4</span><span class="fu">공학 숏폼 완성 예시 46초. 내 영상의 길이 · 자막 · 음악 크기를 비교해 볼 때.</span></li>
-      <li class="old"><span class="fn">AI마스터스쿨_공학숏폼가이드.md · AI마스터스쿨_숏폼제작가이드.md<small>이전 버전</small></span><span class="fu">이전 안내서. 새 안내서로 합쳐졌습니다 — 새로 시작하면 쓰지 않습니다.</span></li>
-      <li class="old"><span class="fn">내 숏폼 재료 한 벌.pdf<small>이전 버전</small></span><span class="fu">8회차 전 준비물(스킬로 재료 만들기). 지금은 이 페이지 순서를 따릅니다.</span></li>
-    </ul>
-    <h3 class="rv">소리 · 장면을 따로 연습할 때</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">내 이야기의 소리 한 벌.pdf<small>6회차</small></span><span class="fu">목소리(AI Studio)와 음악만 연습해 볼 때.</span></li>
-      <li><span class="fn">내 이야기의 장면 한 벌.pdf<small>7회차</small></span><span class="fu">룩 바이블로 장면 사진을 맞추고, 사진을 영상으로 움직이는 연습.</span></li>
-    </ul>
-    <h3 class="rv">발표 자료 · 홍보물을 만들 때</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">다음 발표 하나를 딸깍으로.pdf<small>5회차</small></span><span class="fu">Gemini Canvas로 발표 슬라이드를 말로 만들고 고쳐 내보내기.</span></li>
-      <li><span class="fn">gemini-skill-슬라이드만들기.txt<small>5회차</small></span><span class="fu">슬라이드 디자인 규칙을 Gemini 스킬로 넣어 두고 매번 같은 품질로.</span></li>
-      <li><span class="fn">banner-generation-prompt.md</span><span class="fu">70:9 현수막을 이미지 생성으로 만들 때 붙이는 지시문 틀.</span></li>
-    </ul>
-    <h3 class="rv">받은 지시문을 내 것으로</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">만능 질문 — 받은 것을 내 것으로.txt</span><span class="fu">남이 준 지시문 · 안내서를 Gemini와 말로 주고받으며 내 취향대로 고쳐 받기. 이 안내서에도 쓸 수 있습니다.</span></li>
-    </ul>
-    <h3 class="rv">앱을 만들고 함께 쓸 때</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">내 앱을 인터넷에.pdf<small>3회차</small></span><span class="fu">말로 만든 앱을 인터넷 주소로 공개하기(GitHub · Antigravity).</span></li>
-      <li><span class="fn">마이플레이리스트-배포용.txt<small>3회차</small></span><span class="fu">앱 만들기 지시문 예시 — 내 앱 의뢰서를 쓸 때 본보기.</span></li>
-      <li><span class="fn">우리 모임에서 같이 쓰기.pdf<small>4회차</small></span><span class="fu">정산판처럼 주소 하나로 여럿이 같이 쓰는 앱을 단톡방에서. 휴대폰만 있으면 됩니다.</span></li>
-    </ul>
-    <h3 class="rv">자료를 주고 묻기 (노트북)</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">2021년도 차량분야 사고 장애 교육자료_수업용.pdf<small>1 · 2회차</small></span><span class="fu">노트북에 자료로 넣고 원문 쪽수로 답을 확인하는 연습용. 사내 자료이니 밖으로 보내지 않습니다.</span></li>
-      <li><span class="fn">전동차를_멈춰_세운_1mm_틈새의_연쇄_반응.mp4 · 지하철_19분을_멈춘_1밀리미터의_나비효과.m4a<small>2회차</small></span><span class="fu">노트북이 자료 하나로 만든 동영상 개요 · 오디오 개요 예시.</span></li>
-    </ul>
-    <h3 class="rv">PPT 폴더</h3>
-    <ul class="frows rv" data-d="60">
-      <li><span class="fn">[AI마스터스쿨] 1~8회차 슬라이드</span><span class="fu">지난 수업 화면. 버튼 위치를 다시 볼 때.</span></li>
-    </ul>
+  <h2 class="rv" data-d="60">「강의자료」 폴더 순서 그대로</h2>
+  <div class="keep rv" data-d="120" style="margin-top:12px"><span>단체방 공지의 자료실 링크 → 「강의자료」 · 이 페이지에는 파일 링크를 걸지 않았습니다</span></div>
+  <div class="folders">
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>1. 숏폼 만들기</h3><span class="hint">다시 만들 때</span></header><ul class="fl"><li><span class="ft md">MD</span><b title="숏폼 안내서">숏폼 안내서</b><span class="use">노트북 자료로</span></li><li><span class="ft txt">TXT</span><b title="노트북 요청 사항">노트북 요청 사항</b><span class="use">노트북 설정에</span></li><li><span class="ft mp4">MP4</span><b title="전동차 바퀴 완성본">전동차 바퀴 완성본</b><span class="use">완성 예시 46초</span></li></ul></div>
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>2. 회차별 입력 문장</h3><span class="hint">수업 복습</span></header><ul class="fl"><li><span class="ft txt">TXT</span><b title="1~8회차 입력문구">1~8회차 입력문구</b><span class="use">그 회차에 붙여 넣은 문장</span></li></ul></div>
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>3. 집에서 하는 미션</h3><span class="hint">혼자 다시 해 볼 때</span></header><ul class="fl"><li><span class="ft pdf">PDF</span><b title="내 이야기의 소리 한 벌">내 이야기의 소리 한 벌</b><span class="use">목소리 · 음악</span></li><li><span class="ft pdf">PDF</span><b title="내 이야기의 장면 한 벌">내 이야기의 장면 한 벌</b><span class="use">사진 · 영상 조각</span></li><li><span class="ft pdf">PDF</span><b title="다음 발표 하나를 딸깍으로">다음 발표 하나를 딸깍으로</b><span class="use">발표 슬라이드</span></li><li><span class="ft pdf">PDF</span><b title="내 앱을 인터넷에">내 앱을 인터넷에</b><span class="use">앱 공개</span></li><li><span class="ft pdf">PDF</span><b title="우리 모임에서 같이 쓰기">우리 모임에서 같이 쓰기</b><span class="use">단톡방 앱</span></li></ul></div>
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>4. 지시문 · 스킬</h3><span class="hint">고쳐 쓸 때</span></header><ul class="fl"><li><span class="ft txt">TXT</span><b title="만능 질문 — 받은 것을 내 것으로">만능 질문 — 받은 것을 내 것으로</b><span class="use">내 취향대로</span></li><li><span class="ft txt">TXT</span><b title="gemini-skill-슬라이드만들기">gemini-skill-슬라이드만들기</b><span class="use">슬라이드 스킬</span></li><li><span class="ft md">MD</span><b title="banner-generation-prompt">banner-generation-prompt</b><span class="use">현수막 그림</span></li><li><span class="ft txt">TXT</span><b title="마이플레이리스트-배포용">마이플레이리스트-배포용</b><span class="use">앱 의뢰서 본보기</span></li></ul></div>
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>5. 노트북 실습 자료</h3><span class="hint">자료로 묻기</span></header><ul class="fl"><li><span class="ft pdf">PDF</span><b title="2021 차량분야 사고 장애 교육자료">2021 차량분야 사고 장애 교육자료</b><span class="use">사내용 · 밖으로 X</span></li><li><span class="ft mp4">MP4</span><b title="1mm 틈새의 연쇄 반응">1mm 틈새의 연쇄 반응</b><span class="use">동영상 개요 예시</span></li><li><span class="ft m4a">M4A</span><b title="1밀리미터의 나비효과">1밀리미터의 나비효과</b><span class="use">오디오 개요 예시</span></li></ul></div>
+<div class="fold rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>PPT</h3><span class="hint">버튼 위치 다시 보기</span></header><ul class="fl"><li><span class="ft ppt">PPT</span><b title="1~8회차 슬라이드">1~8회차 슬라이드</b><span class="use">지난 수업 화면</span></li></ul></div>
+<div class="fold old rv"><header><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>9. 이전 버전</h3><span class="hint">쓰지 않음</span></header><ul class="fl"><li><span class="ft md">MD</span><b title="공학숏폼가이드 · 숏폼제작가이드">공학숏폼가이드 · 숏폼제작가이드</b><span class="use">안내서로 합쳐짐</span></li><li><span class="ft pdf">PDF</span><b title="내 숏폼 재료 한 벌">내 숏폼 재료 한 벌</b><span class="use">이 페이지로 대체</span></li></ul></div>
   </div>
 </div></section>
 </main>
@@ -858,10 +925,10 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
   }
   document.querySelectorAll('[data-copy]').forEach(function(b){
     b.addEventListener('click', function(){
-      var label = b.textContent;
+      var lab = b.querySelector('span') || b, label = lab.textContent;
       getText(b.dataset.copy).then(function(t){ return navigator.clipboard.writeText(t); })
-        .then(function(){ b.classList.add('done'); b.textContent='복사했습니다'; setTimeout(function(){ b.classList.remove('done'); b.textContent=label; }, 1800); })
-        .catch(function(){ b.textContent='복사 안 됨 — 파일로 받기를 쓰세요'; setTimeout(function(){ b.textContent=label; }, 2600); });
+        .then(function(){ b.classList.add('done'); lab.textContent='복사했습니다'; setTimeout(function(){ b.classList.remove('done'); lab.textContent=label; }, 1800); })
+        .catch(function(){ lab.textContent='복사 안 됨 — 파일로 받기'; setTimeout(function(){ lab.textContent=label; }, 2600); });
     });
   });
 
@@ -927,12 +994,12 @@ footer{padding:48px 0 72px; font-size:var(--f-small); color:var(--t3); border-to
     var nx = root.querySelector('[data-next]'); if(nx) nx.addEventListener('click', function(){ stop(root); advance(root); });
     var pl = root.querySelector('[data-play]'); if(pl) pl.addEventListener('click', function(){
       if(root._timer){ stop(root); return; }
-      setStep(root, firstItem(root)); pl.textContent = '■ 멈추기';
+      setStep(root, firstItem(root)); pl.querySelector('span').textContent = '멈추기';
       root._timer = setInterval(function(){ if(!advance(root)) stop(root); }, 2400);
     });
     setStep(root, firstItem(root));
   });
-  function stop(root){ if(root._timer){ clearInterval(root._timer); root._timer = null; } var pl = root.querySelector('[data-play]'); if(pl) pl.textContent = '▶ 순서대로 보기'; }
+  function stop(root){ if(root._timer){ clearInterval(root._timer); root._timer = null; } var pl = root.querySelector('[data-play]'); if(pl) pl.querySelector('span').textContent = '순서대로 보기'; }
 
   /* 서랍 */
   var bg = document.querySelector('.drawer-bg'), openD = null;
